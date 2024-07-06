@@ -1,0 +1,9 @@
+<div xmlns:th="http://www.thymeleaf.org">
+<ul class="list-group border">
+    <li class="list-group-item bg-primary text-white">Danh mục</li>
+    <li class="list-unstyled">
+        <a th:each="c:${cates}" th:href="@{|/product/list?cid=${c.id}|}" class="list-group-item">
+        [[${c.name}]]</a>
+    </li>
+</ul>
+</div>
