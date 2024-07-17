@@ -1,4 +1,4 @@
-package com.example.java6;
+package com.example.java6.interceptor.config;
 
 import com.example.java6.interceptor.GlobalInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;

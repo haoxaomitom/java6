@@ -9,14 +9,19 @@
             </div>
             <div class="card-body">
                 <a th:href="@{|/product/detail/${p.id}|}">
-                    <img th:src="@{|/images/${p.image}|}">
+                    <img class="thumbnail-fixed" th:src="@{|/images/${p.image}|}">
                 </a>
             </div>
-            <div class="card-footer text-right">
+            <div class="card-footer d-flex justify-content-between align-items-center">
                 <b class="pull-left">$[[${p.price}]]</b>
-                <button class="btn btn-success">
-                    <i class="glyphicon glyphicon-shopping-cart"></i>
+                <div class="butt">
+                <button class="btn btn-success" th:attr="ng-click=@{|cart.add(${p.id})|}">
+                    <i class="fa-solid fa-cart-shopping"></i>
                 </button>
+                <button class="btn btn-danger">
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+                </div>
             </div>
         </div>
     </div>

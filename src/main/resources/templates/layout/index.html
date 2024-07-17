@@ -11,10 +11,15 @@
         integrity="sha512-***********" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link href="/css/indexProductList.css" rel="stylesheet"/>
 </head>
 
-<body class="container">
-    <header class="row"></header>
+<body class="container" ng-app="shopping-cart-app" ng-controller="shopping-cart-ctrl">
+    <header class="row">
+        <div class="card my-3 py-3 bs-success-bg-subtle">
+        <h1>Shopping item craft</h1>
+        </div>
+    </header>
     <nav class="row">
         <div th:replace="/layout/_menu.html"></div>
     </nav>
@@ -38,7 +43,9 @@
                     <div class="null-item"></div>
                 </div>
             </div>
+        </div>
     </footer>
+    <script type="text/javascript" src="/js/shopping-cart-app.js"></script>
 </body>
 
 </html>

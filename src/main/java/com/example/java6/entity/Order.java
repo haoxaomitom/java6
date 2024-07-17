@@ -26,7 +26,7 @@ public class Order  implements Serializable{
 	@Column(name = "Createdate")
 	Date createDate = new Date();
 	@ManyToOne
-	@JoinColumn(name = "Username")
+	@JoinColumn(name = "username")
 	Account account;
 	
 	@JsonIgnore

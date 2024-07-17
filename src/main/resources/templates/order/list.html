@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en" th:replace="~{/layout/index :: dynamic(~{::main})}">
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{/layout/index :: dynamic(~{::main})}">
 <body>
-<main class="row">
-    <div th:each="p: ${items}" class="col-sm-4">
-        <div class="panel panel-primary poly-item text-center">
-            <div class="panel-heading">
-                <div class="panel-title" th:utext="${p.name}"></div>
-            </div>
-            <div class="panel-body">
-                <a th:href="@{/product/detail/${p.id}\/">
-                    <img th:src="@{\/assets/images/${p.image}\/">
-                </a>
-            </div>
-            <div class="panel-footer text-right">
-                <b class="pull-left">$[[${p.price}]]</b>
-                <button class="btn btn-success">
-                    <i class="glyphicon glyphicon-shopping-cart"></i>
-                </button>
-            </div>
-        </div>
+<main>
+    <div class="card card-primary">
+        <div class="card-header">YOUR ORDERS PURCHASED</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Order No.</th>
+                <th>Order Date</th>
+                <th>Shipping Address</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order, state : ${orders}">
+                <td>[[${state.index}]]</td>
+                <td>[[${order.id}]]</td>
+                <td>[[${order.createDate}]]</td>
+                <td>[[${order.address}]]</td>
+                <td>
+                    <a th:href="@{/order/detail/{id}(id=${order.id})}" class="btn btn-default">
+                        <b class="glyphicon glyphicon-search"></b>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    </main>
+</main>
 </body>
 </html>

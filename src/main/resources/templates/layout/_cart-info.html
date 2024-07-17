@@ -1,6 +1,10 @@
 <div xmlns:th="http://www.thymeleaf.org">
-    <div class="panel panel-default">
-        <div class="panel-body text-center">a basic panel</div>
-        <a th:href="@{cart/view}">x items x $x</a>
+    <div class="card card-default my-3">
+        <div class="card-body text-center">
+            <h3>Cart</h3>
+        </div>
+        <i class="fa-solid fa-cart-shopping text-center my-3">
+            <a th:href="@{cart/view}">{{cart.count}} items x ${{cart.amount | number:2}}</a>
+        </i>
     </div>
 </div>
