@@ -4,68 +4,70 @@ app.controller("product-ctrl", function ($scope, $http) {
     $scope.form = {};
 
     $scope.initialize = function () {
-        // load products
-        $http.get("/api/product").then(resp => {
+        // Load products
+        $http.get("/api/products").then(resp => {
             $scope.items = resp.data;
             $scope.items.forEach(item => {
                 item.createDate = new Date(item.createDate);
             });
         });
 
-        // load categories
+        // Load categories
         $http.get("/api/categories").then(resp => {
             $scope.cates = resp.data;
         });
     };
     $scope.initialize();
 
-    // Hiển thị lên form
+    // Display on form
     $scope.edit = function (item) {
         $scope.form = angular.copy(item);
+        $scope.form.imageUrl = "/static/images/" + item.image;
         $(".nav-tabs a:eq(0)").tab('show');
     };
 
-    // Thêm sản phẩm mới
+    // Add new product
     $scope.create = function () {
         var item = angular.copy($scope.form);
         $http.post("/api/products", item).then(resp => {
             resp.data.createDate = new Date(resp.data.createDate);
             $scope.items.push(resp.data);
             $scope.reset();
-            alert("Thêm mới sản phẩm thành công!");
+            alert("Product added successfully!");
         }).catch(error => {
-            alert("Lỗi thêm mới sản phẩm!");
+            alert("Error adding product!");
             console.log("Error", error);
         });
     };
 
-    // Cập nhật sản phẩm
+    // Update product
     $scope.update = function () {
         var item = angular.copy($scope.form);
         $http.put(`/api/products/${item.id}`, item).then(resp => {
             var index = $scope.items.findIndex(p => p.id === item.id);
             $scope.items[index] = item;
-            alert("Cập nhật sản phẩm thành công!");
+            $scope.reset();
+            alert("Product updated successfully!");
         }).catch(error => {
-            alert("Lỗi cập nhật sản phẩm!");
+            alert("Error updating product!");
             console.log("Error", error);
         });
     };
 
-    // Xóa sản phẩm
+    // Delete product
     $scope.delete = function (item) {
         $http.delete(`/api/products/${item.id}`).then(resp => {
             var index = $scope.items.findIndex(p => p.id === item.id);
             $scope.items.splice(index, 1);
             $scope.reset();
-            alert("Xóa sản phẩm thành công!");
+            alert("Product deleted successfully!");
         }).catch(error => {
-            alert("Lỗi xóa sản phẩm!");
+            alert("Error deleting product!");
             console.log("Error", error);
         });
     };
 
-    // Upload hình
+    // Upload image
     $scope.imageChanged = function (files) {
         var data = new FormData();
         data.append('file', files[0]);
@@ -74,10 +76,16 @@ app.controller("product-ctrl", function ($scope, $http) {
             headers: {'Content-Type': undefined}
         }).then(resp => {
             $scope.form.image = resp.data.name;
+            $scope.form.imageUrl = resp.data.url;
         }).catch(error => {
-            alert("Lỗi upload hình ảnh");
+            alert("Error uploading image");
             console.log("Error", error);
         });
+    };
+
+    // Reset form
+    $scope.reset = function () {
+        $scope.form = {};
     };
 
     $scope.pager = {

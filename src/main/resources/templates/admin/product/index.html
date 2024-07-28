@@ -1,12 +1,16 @@
-<ul class="nav nav-tabs" style="font-variant: small-caps;">
-    <li><a data-toggle="tab" data-target="#edit" href="">Product Edition</a></li>
-    <li class="active"> <a data-toggle="tab" data-target="#list" href="">List of Products</a></li>
-</ul>
-<div class="tab-content">
-    <div id="edit" class="tab-pane fade">
-        <div ng-include="/admin/product/form.html"></div>
+<!--<ul class="nav nav-tabs" style="font-variant: small-caps;">-->
+<!--    <li><a data-toggle="tab" data-target="#edit" href="">Product Edition</a></li>-->
+<!--    <li class="active"> <a data-toggle="tab" data-target="#list" href="">List of Products</a></li>-->
+<!--</ul>-->
+<h1 class="text-center">PRODUCT FORM</h1>
+<hr>
+<div class="row">
+<div class="col-sm-3">
+    <div ng-include="'/admin/product/form'"></div>
 </div>
-<div id="list" class="tab-pane fade in active">
-        <div ng-include="/admin/product/table.html"></div>
-    </div>
+<div class="col-sm-9">
+    <div ng-include="'/admin/product/table'"></div>
 </div>
+</div>
+
+

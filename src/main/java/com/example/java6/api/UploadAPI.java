@@ -28,6 +28,7 @@ public class UploadAPI {
         ObjectNode node = mapper.createObjectNode();
         node.put("name", savedFile.getName());
         node.put("size", savedFile.length());
+        node.put("url", "/static/" + folder + "/" + savedFile.getName());
         return node;
     }
 }

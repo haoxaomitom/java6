@@ -15,4 +15,19 @@ public class HomeController {
         System.out.println("go to admin page");
         return "admin/index";
     }
+    @RequestMapping({"/admin/product/index"})
+    public String adminProduct(){
+        System.out.println("go to admin product");
+        return "admin/product/index";
+    }
+    @RequestMapping({"/admin/product/form"})
+    public String adminProductForm(){
+        System.out.println("go to admin product");
+        return "admin/product/form";
+    }
+    @RequestMapping({"/admin/product/table"})
+    public String adminProductTable(){
+        System.out.println("go to admin product");
+        return "admin/product/table";
+    }
 }

@@ -11,7 +11,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
                 item.qty++;
                 this.saveToLocalStorage();
             } else {
-                $http.get(`/rest/products/${id}`).then(resp => {
+                $http.get(`/api/products/${id}`).then(resp => {
                     resp.data.qty = 1;
                     this.items.push(resp.data);
                     this.saveToLocalStorage();
@@ -85,7 +85,7 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
         purchase() {
             var order = angular.copy(this);
             // Thực hiện đặt hàng
-            $http.post("/rest/orders", order).then(resp => {
+            $http.post("/api/orders", order).then(resp => {
                 alert("Đặt hàng thành công!");
                 $scope.cart.clear();
                 location.href = "/order/detail/" + resp.data.id;
