@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @RequestMapping({"/", "/home/index"})
     public String home() {
+        System.out.println("Home Page");
         return "redirect:/product/list";
     }
     @RequestMapping({"/admin","/admin/home/index"})
     public String admin(){
-
-        return "redirect:/admin/index.html";
+        System.out.println("go to admin page");
+        return "admin/index";
     }
 }

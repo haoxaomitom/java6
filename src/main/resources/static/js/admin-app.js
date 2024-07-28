@@ -1,9 +1,9 @@
-app = angular.module("admin-app", ["ngRoute"]);
+var app = angular.module("admin-app", ["ngRoute"]);
 
 app.config(function ($routeProvider) {
     $routeProvider
         .when("/product", {
-            templateUrl: "/admin/product/index.html",
+            templateUrl: "/templates/admin/product/index.html",
             controller: "product-ctrl"
         })
         .when("/authorize", {

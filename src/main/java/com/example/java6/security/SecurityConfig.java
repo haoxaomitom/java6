@@ -46,7 +46,7 @@ public class SecurityConfig{
                         .tokenValiditySeconds(86400)
                 )
                 .exceptionHandling(configurer -> configurer
-                        .accessDeniedPage("/security/access-denied")
+                        .accessDeniedPage("/security/unauthorized")
                 )
                 .logout(lg -> lg
                         .logoutUrl("/security/logoff")
@@ -64,7 +64,7 @@ public class SecurityConfig{
                 String password = passwordEncoder.encode(user.getPassword());
                 String[] roles = user.getAuthorities().stream()
                         .map(er -> er.getRole().getId())
-                        .collect(Collectors.toList()).toArray(new String[0]);
+                        .toList().toArray(new String[0]);
                 return User.withUsername(username).password(password).roles(roles).build();
             } catch (NoSuchElementException e) {
                 throw new UsernameNotFoundException(username + " not found!");
@@ -77,7 +77,7 @@ public class SecurityConfig{
         return new BCryptPasswordEncoder();
     }
 
-//    @Override
+//    @Bean
 //    public void configure(WebSecurity web) throws Exception {
 //        web.ignoring().requestMatchers(HttpMethod.OPTIONS, "/**");
 //    }
