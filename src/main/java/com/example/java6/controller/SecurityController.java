@@ -1,11 +1,18 @@
 package com.example.java6.controller;
 
+import com.example.java6.service.impl.AccountServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class SecurityController {
+    private final AccountServiceImpl accountServiceImpl;
+
+    public SecurityController(AccountServiceImpl accountServiceImpl) {
+        this.accountServiceImpl = accountServiceImpl;
+    }
+
     @RequestMapping("/security/login/form")
     public String loginForm(Model model) {
         model.addAttribute("message", "Vui lòng đăng nhập!");
@@ -28,10 +35,9 @@ public class SecurityController {
         model.addAttribute("message", "Không có quyền truy xuất!");
         return "security/login";
     }
-    @RequestMapping("/secutiry/logoff/success")
+    @RequestMapping("/security/logoff/success")
     public String logoffSuccess(Model model) {
         model.addAttribute("message","Bạn đã đăng xuất !");
         return "security/login";
     }
-
 }

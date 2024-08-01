@@ -21,6 +21,7 @@ public class Account  implements Serializable{
 	String password;
 	String fullname;
 	String email;
+	@Column(name = "Photo", nullable = true) // Cho phép giá trị NULL
 	String photo;
 	@JsonIgnore
 	@OneToMany(mappedBy = "account")

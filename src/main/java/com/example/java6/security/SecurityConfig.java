@@ -6,10 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,9 +21,10 @@ import java.util.stream.Collectors;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
+public class SecurityConfig {
+
     @Autowired
-    AccountService accountService;
+    private AccountService accountService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,6 +33,8 @@ public class SecurityConfig{
                 .authorizeRequests(authorize -> authorize
                         .requestMatchers("/order/**").authenticated()
                         .requestMatchers("/admin/**").hasAnyRole("STAF", "DIRE")
+                        .requestMatchers("/security/register/form").permitAll() // Cho phép truy cập công khai
+                        .requestMatchers("/security/register").permitAll() // Cho phép truy cập công khai
                         .requestMatchers("/rest/authorities").hasRole("DIRE")
                         .anyRequest().permitAll()
                 )
@@ -60,12 +62,13 @@ public class SecurityConfig{
         return username -> {
             try {
                 Account user = accountService.findById(username);
-                PasswordEncoder passwordEncoder = passwordEncoder();
-                String password = passwordEncoder.encode(user.getPassword());
                 String[] roles = user.getAuthorities().stream()
                         .map(er -> er.getRole().getId())
-                        .toList().toArray(new String[0]);
-                return User.withUsername(username).password(password).roles(roles).build();
+                        .toArray(String[]::new);
+                return User.withUsername(username)
+                        .password(user.getPassword())
+                        .roles(roles)
+                        .build();
             } catch (NoSuchElementException e) {
                 throw new UsernameNotFoundException(username + " not found!");
             }
@@ -77,8 +80,9 @@ public class SecurityConfig{
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().requestMatchers(HttpMethod.OPTIONS, "/**");
-//    }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(HttpMethod.OPTIONS, "/**");
+    }
 }
+

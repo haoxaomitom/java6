@@ -72,27 +72,27 @@ app.controller("shopping-cart-ctrl", function($scope, $http) {
     $scope.order = {
         createDate: new Date(),
         address: "",
-        account: {username: $("#username").text()},
+        account: { username: $("#username").text().trim() },
         get orderDetails() {
             return $scope.cart.items.map(item => {
                 return {
-                    product: {id: item.id},
+                    product: { id: item.id },
                     price: item.price,
                     quantity: item.qty
-                }
+                };
             });
         },
         purchase() {
             var order = angular.copy(this);
-            // Thực hiện đặt hàng
+            console.log('Order to be placed:', order);
             $http.post("/api/orders", order).then(resp => {
                 alert("Đặt hàng thành công!");
                 $scope.cart.clear();
                 location.href = "/order/detail/" + resp.data.id;
             }).catch(error => {
-                alert("Đặt hàng lỗi!")
-                console.log(error)
-            })
+                alert("Đặt hàng lỗi!");
+                console.log(error);
+            });
         }
-    }
+    };
 });

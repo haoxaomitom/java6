@@ -30,4 +30,10 @@ public class HomeController {
         System.out.println("go to admin product");
         return "admin/product/table";
     }
+
+    @RequestMapping({"admin/authority/index"})
+    public String authority(){
+        System.out.println("go to authority page");
+        return "admin/authority/index";
+    }
 }

@@ -1,9 +1,11 @@
-<div xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid bg-secondary">
         <a class="navbar-brand" href="#">Icon</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -11,41 +13,30 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/product/list}">Home</a>
                 </li>
-                <li class="nav-item">
+                <!-- Hiển thị link đăng nhập nếu chưa đăng nhập -->
+                <li sec:authorize="isAnonymous()" class="nav-item">
                     <a class="nav-link" th:href="@{/security/login/form}">Sign in</a>
                 </li>
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li> -->
-                <li class="nav-item">
+                <!-- Hiển thị link đăng xuất nếu đã đăng nhập -->
+                <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" th:href="@{/security/logoff}">Sign out</a>
                 </li>
-                <li class="nav-item">
+                <!-- Hiển thị link đơn hàng nếu đã đăng nhập -->
+                <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" th:href="@{/order/list}">Your Orders</a>
                 </li>
-                <li class="nav-item">
+                <!-- Hiển thị link quản trị nếu có quyền DIRE hoặc STAF -->
+                <li sec:authorize="hasAuthority('DIRE') or hasAuthority('STAF')" class="nav-item">
                     <a class="nav-link" th:href="@{/admin/home/index}">Administration</a>
                 </li>
             </ul>
-            <!-- <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> -->
-            <li class="nav navbar-nav navbar-right">
-                <a class="nav-link" href="#">Welcome</a>
-            </li>
+            <!-- Hiển thị tên người dùng nếu đã đăng nhập -->
+            <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right">
+                <li>
+                    <a class="nav-link" href="#">Welcome <span th:text="${#authentication.name}"></span></a>
+                </li>
+            </ul>
         </div>
     </div>
 </nav>
-</div>
+</html>

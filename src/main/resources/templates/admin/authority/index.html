@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>authority</h1>
-</body>
-</html>
+<div class="panel panel-default">
+    <h1 class="panel-heading text-center">AUTHORIZING</h1>
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="bg-success text-uppercase text-white">
+            <tr>
+                <th class="text-center">Name</th>
+                <th ng-repeat="role in roles" class="text-center">{{role.name}}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="acc in pager.items">
+                <td>{{acc.fullname}}</td>
+                <td ng-repeat="role in roles" class="text-center">
+                    <input type="checkbox" ng-checked="authority_of(acc, role)" ng-click="authority_changed(acc, role)"
+                           class="form-check-input" data-bs-toggle="tooltip" title="{{role.name}}">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-center">
+        <button ng-click="pager.first()" class="btn btn-danger">
+            <b class="fa-solid fa-backward-fast"></b>
+        </button>
+        <button ng-click="pager.prev()" class="btn btn-primary">
+            <b class="fa-solid fa-backward"></b>
+        </button>
+        <button class="btn btn-success">{{pager.page + 1}} of {{pager.count}}</button>
+        <button ng-click="pager.next()" class="btn btn-primary">
+            <b class="fa-solid fa-forward"></b>
+        </button>
+        <button ng-click="pager.last()" class="btn btn-danger">
+            <b class="fa-solid fa-forward-fast"></b>
+        </button>
+    </div>
+</div>
+
